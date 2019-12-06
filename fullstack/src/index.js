@@ -1,38 +1,29 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Display = props => <div>{props.text + props.value}</div>
-
-const Button = (props) => (
-    <button onClick={props.handleClick}>
-      {props.text}
-    </button>
-)
-
-const Statistics = (props) => {
-  return(
-    <div>
-      <Display text='good' value ={props.good} />
-      <Display text='neutral' value ={props.neutral} />
-      <Display text='bad' value ={props.bad} />
-    </div>
-  )
-}
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
 
 const App = () => {
-  // save clicks of each button to own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [ persons, setPersons] = useState([
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
+  ]) 
+  const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('')
+  const [ showName, setShowName ] = useState('')
 
   return (
     <div>
-      <h1>give feedback</h1>
-      <Button handleClick={() => setGood(good + 1)} text="thousand" />
-      <Button handleClick={() => setNeutral(neutral + 1)} text="reset" />
-      <Button handleClick={() => setBad(bad + 1)} text="increment" />
-      <h1>statistics</h1>
-      <Statistics good={good} neutral={neutral} bad={bad}/>
+      <h2>Phonebook</h2>
+      <Filter showName={showName} setShowName={setShowName}/>
+      <h3>Add a new</h3>
+      <PersonForm persons={persons} newNumber={newNumber} newName={newName}  setNewName={setNewName} setNewNumber={setNewNumber} setPersons={setPersons}/>
+      <h2>Numbers</h2>
+      <Persons showName={showName} persons={persons}/>
     </div>
   )
 }
